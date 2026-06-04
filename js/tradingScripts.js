@@ -10,10 +10,24 @@ function handleTestClick()
 function tradingPageInit()
 {
     console.log('tradingPageInit');
+    attachStyleSheet();
     fetchCities();
     fetchCommodities();
+    
     //fetchCity('lisbon');
 }
+
+function attachStyleSheet()
+{
+    const styleSheetLocation='css/tradingStyles.css';
+    const styleLink=document.createElement('link');
+    styleLink.rel='stylesheet';
+    styleLink.type='text/css';
+    styleLink.href=styleSheetLocation;
+    document.head.appendChild(styleLink);
+    
+}
+
 
 
 function handleSubmitButton()
