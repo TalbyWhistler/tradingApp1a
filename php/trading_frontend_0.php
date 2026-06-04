@@ -1,26 +1,35 @@
 <?php 
+    // class list 
+    $panelClass="inputPanel";
+    $panelInputsClass="panelInputs";
+    $titleClass="tradingTitle";
+    $cityButtonClass="cityButton";
+    $commodityButtonClass="commodityButton";
+    $submitButtonClass="tradingSubmitButton";
+
+
     $outputMessage='';
     $inputPanel=
     '
-        <div class="inputPanel">
+        <div class="'.$panelClass.'">
         
             <label>City</label>
             </br>
-            <input id="cityInput"></input>
+            <input class="'.$panelInputsClass.'" id="cityInput"></input>
             </br>
             <label>Commodity</label>
             </br>
-            <input id="commodityInput"></input>
+            <input class="'.$panelInputsClass.'" id="commodityInput"></input>
             </br>
             <label>Buying Price</label>
             </br>
-            <input id="buyingPriceInput"></input>
+            <input class="'.$panelInputsClass.'" id="buyingPriceInput"></input>
             </br>
             <label>Selling Price</label>
             </br>
-            <input id="sellingPriceInput"></input>
+            <input class="'.$panelInputsClass.'" id="sellingPriceInput"></input>
             </br>
-            <button onclick="handleSubmitButton()">Submit</button>
+            <button class="'.$submitButtonClass.'"onclick="handleSubmitButton()">Submit</button>
         </div>
     ';
     $titleText='Trade Route Information';
@@ -32,7 +41,7 @@
     
     $title =
         '
-            <h1>'.$titleText.'</h1>
+            <h1 class="'.$titleClass.'">'.$titleText.'</h1>
             
             
             <script src="js/tradingScripts.js"></script>

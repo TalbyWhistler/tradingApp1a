@@ -1,4 +1,49 @@
-h1 
+
+
+/*
+    $panelClass="inputPanel";
+    $panelInputsClass="panelInputs";
+    $titleClass="tradingTitle";
+    $cityButtonClass="cityButton";
+    $commodityButtonClass="commodityButton";
+    $submitButtonClass="tradingSubmitButton";
+    */
+
+.tradingTitle
 {
-    color:red;
+    font-family:'Calibri';
+    color:green;
+}
+
+
+.inputPanel 
+{
+    background-color: rgb(215, 223, 113);
+    font-family: 'Calibri';
+}
+
+.tradingSubmitButton
+{
+    background-color: black;
+    color:white;
+}
+
+.cityButton
+{
+    background-color: yellowgreen;
+}
+
+.commodityButton
+{
+    background-color: aquamarine;
+}
+
+.infoTable 
+{
+    font-family:'Calibri';
+}
+
+.tradeRouteTable
+{
+    font-family:'Calibri';
 }
