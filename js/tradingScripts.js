@@ -192,8 +192,9 @@ function printCityInfo(data)
     `
         <tr>
             <th>Commodity</th>
-            <th>Buying Price</th>
             <th>Selling Price</th>
+            <th>Buying Price</th>
+            
         </tr>
     `;
     let tableCloser=
@@ -240,8 +241,8 @@ function printCommodityInfo(data)
     `
         <tr>
             <th>City</th>
-            <th>Buying Price</th>
             <th>Selling Price</th>
+            <th>Buying Price</th>         
         </tr>
     `;
     let tableCloser=
