@@ -10,10 +10,24 @@ function handleTestClick()
 function tradingPageInit()
 {
     console.log('tradingPageInit');
+    attachStyleSheet();
     fetchCities();
     fetchCommodities();
+    
     //fetchCity('lisbon');
 }
+
+function attachStyleSheet()
+{
+    const styleSheetLocation='css/tradingStyles.css';
+    const styleLink=document.createElement('link');
+    styleLink.rel='stylesheet';
+    styleLink.type='text/css';
+    styleLink.href=styleSheetLocation;
+    document.head.appendChild(styleLink);
+    
+}
+
 
 
 function handleSubmitButton()
@@ -178,8 +192,9 @@ function printCityInfo(data)
     `
         <tr>
             <th>Commodity</th>
-            <th>Buying Price</th>
             <th>Selling Price</th>
+            <th>Buying Price</th>
+            
         </tr>
     `;
     let tableCloser=
@@ -226,8 +241,8 @@ function printCommodityInfo(data)
     `
         <tr>
             <th>City</th>
-            <th>Buying Price</th>
             <th>Selling Price</th>
+            <th>Buying Price</th>         
         </tr>
     `;
     let tableCloser=
