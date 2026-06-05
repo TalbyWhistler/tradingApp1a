@@ -169,7 +169,7 @@ function handleCityButton(city)
 }
 
 
-function printCityInfo(data)
+function printCityInfo(data,city)
 {
 
     try 
@@ -190,6 +190,11 @@ function printCityInfo(data)
     `;
     let tableHeader=
     `
+        <tr>
+            <th>
+                <h3>${city}</h3>
+            </th>
+        </tr>
         <tr>
             <th>Commodity</th>
             <th>Selling Price</th>
@@ -218,7 +223,7 @@ function printCityInfo(data)
 }
 
 
-function printCommodityInfo(data)
+function printCommodityInfo(data,commodity)
 {
 
     try 
@@ -239,6 +244,11 @@ function printCommodityInfo(data)
     `;
     let tableHeader=
     `
+        <tr id="infoTableHeader">
+            <th>
+                <h3>${commodity}</h3>
+            </th>
+        </tr>
         <tr>
             <th>City</th>
             <th>Selling Price</th>
@@ -287,7 +297,7 @@ function fetchCity(city)
         }
      )
      .then(response=>response.json())
-     .then(data=>printCityInfo(data));
+     .then(data=>printCityInfo(data,city));
 }
 
 function fetchCommodity(commodity)
@@ -305,7 +315,7 @@ function fetchCommodity(commodity)
         }
      )
      .then(response=>response.json())
-     .then(data=>printCommodityInfo(data));
+     .then(data=>printCommodityInfo(data,commodity));
 }
 
 
@@ -342,7 +352,7 @@ function fetchTradeRoutesByCommodity(commodity)
         }
      )
      .then(response=>response.json())
-     .then(data=>printTradeRoutesByCommodity(data));
+     .then(data=>printTradeRoutesByCommodity(data,commodity));
 }
 
 
@@ -366,6 +376,12 @@ function printTradeRoutesByCity(data)
     `;
     let tableHeader=
     `
+        <tr>
+            <th>
+                <h3>Trade Routes</h3>
+            </th>
+        </tr>
+ 
         <tr>
             <th>Commodity</th>
             <th>From</th>
@@ -423,10 +439,17 @@ function printTradeRoutesByCommodity(data)
     let outputArea=document.getElementById("tradeRouteArea");
     let tableOpener=
     `
+        
         <table class="tradeRouteTable"><tbody>
     `;
     let tableHeaders=
     `
+        
+        <tr>
+            <th>
+                <h3>Trade Routes</h3>
+            </th>
+        </tr>
         <tr>
             <th>From</th>
             <th>To</th>

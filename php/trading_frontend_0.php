@@ -38,6 +38,14 @@
     $commoditiesArea='<div id="commoditiesArea"></div>';
     $infoArea='<div id="infoArea"></div>';
     $tradeRouteArea='<div id="tradeRouteArea"></div>';
+
+    $displayRow=
+    '
+        <div class="row">'
+        .$infoArea. 
+        $tradeRouteArea.
+        '</div>
+    ';
     
     $title =
         '
@@ -47,12 +55,14 @@
             <script src="js/tradingScripts.js"></script>
         ';
     $outputMessage=
+        '<div class="tradePage">'.
         $title
         .$inputPanel
+        
         .$citiesArea
         .$commoditiesArea
-        .$infoArea
-        .$tradeRouteArea;
+       
+        .$displayRow.'</div>';
         
     echo $outputMessage;
 ?>
