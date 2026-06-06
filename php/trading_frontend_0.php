@@ -1,72 +1,84 @@
 <?php 
-    // class list 
-    $panelClass="inputPanel";
-    $panelInputsClass="panelInputs";
-    $titleClass="tradingTitle";
-    $cityButtonClass="cityButton";
-    $commodityButtonClass="commodityButton";
-    $submitButtonClass="tradingSubmitButton";
+    function createElement($element,$id,$class,$inner)
+    {
+        $elementString='';
+        $elementString=$elementString.'<'.$element.' id="'.$id.'" class="'.$class.'"';
+        $elementString=$elementString.'>';
+        $elementString=$elementString.$inner;
+        $elementString=$elementString.'</'.$element.'>';
+        return $elementString;
+    }
 
+     function createInput($id,$class)
+    {
+        $elementString='';
+        $elementString=$elementString.'<input id="'.$id.'" class="'.$class.'"';
+        $elementString=$elementString.'/>';
+       // $elementString=$elementString.$inner;
+    //    $elementString=$elementString.'</'.$element.'>';
+        return $elementString;
+    }
 
-    $outputMessage='';
-    $inputPanel=
-    '
-        <div class="inputPanel">
+    function createButton($id,$class,$function,$inner)
+    {
+        $elementString='';
+        $elementString=$elementString
+            .'<button id='.$id.' class='.$class.' onclick="'.$function.'()">'
+            .$inner 
+            .'</button>';
+        return $elementString;
+    }
+
+    function tradingPage()
+    {
+        $cityInputLabel=createElement('label','cityInputLabel','inputLabels','City');
+        $cityInput=createInput("cityInput","panelInputs");
+        $commodityInputLabel=createElement('label','commodityInput','panelInputs',"Commodity");
+        $commodityInput=createInput("commodityInput","panelInputs");
+        $buyingInputLabel=createElement('label','buyingInputLabel','inputLabels',"Buying Price");
+        $buyingInput=createInput('buyingPriceInput',"panelInputs");
+        $sellingInputLabel=createElement('label','sellingInputLabel','inputLabels',"Selling Price");
+        $sellingInput=createInput('sellingPriceInput','panelInputs');
+        $button=createButton("tradingSubmitButton","tradingSubmitButton","handleSubmitButton",'Submit');
+        $br='</br>';
+        $statusIndicator=createElement('p','tradingStatusIndicator','statusIndicator','Ready');
+        $statusIndicatorBox=createElement('div','tradingStatusIndicatorBox','statusIndicatorBox',$statusIndicator);
         
-            <label>City</label>
-            </br>
-            <input class="panelInputs" id="cityInput"/>
-            </br>
-            <label>Commodity</label>
-            </br>
-            <input class="panelInputs" id="commodityInput"/>
-            </br>
-            <label>Buying Price</label>
-            </br>
-            <input class="panelInputs" id="buyingPriceInput"/>
-            </br>
-            <label>Selling Price</label>
-            </br>
-            <input class="panelInputs" id="sellingPriceInput"/>
-            </br>
-            <button class="'.$submitButtonClass.'" onclick="handleSubmitButton()">Submit</button>
-            <div class="statusIndicatorBox" id="tradingStatusIndicatorBox"><p class="statusIndicator" id="tradingStatusIndicator">Ready</p></div>
-        </div>
-    ';
+        $panelContents=''
+            .$cityInputLabel.$br.$cityInput.$br
+            .$commodityInputLabel.$br.$commodityInput.$br 
+            .$buyingInputLabel.$br.$buyingInput.$br 
+            .$sellingInputLabel.$br.$sellingInput.$br 
+            .$button
+            .$statusIndicatorBox;
 
+        $inputPanel=createElement('div','inputPanel','inputPanel',$panelContents);
+        
     
-    
-    $titleText='Trade Route Information';
-    
-    $citiesArea='<div id="citiesArea"></div>';
-    $commoditiesArea='<div id="commoditiesArea"></div>';
-    $infoArea='<div id="infoArea"></div>';
-    $tradeRouteArea='<div id="tradeRouteArea"></div>';
+        $scriptLink='<script src="js/tradingScripts.js"></script>';
+        
+        $citiesArea=createElement('div','citiesArea','infoOutputs','');
+        $commoditiesArea=createElement('div','commoditiesArea','infoOutputs','');
+        $infoArea=createElement('div','infoArea','infoOutputs','');
+        $tradeRouteArea=createElement('div','tradeRouteArea','infoOutputs','');
+        $displayRow=createElement('div',"tradingRow","row",$infoArea.$tradeRouteArea);
+        $title=createElement('h1',"tradingTitle","tradingTitle","Trade Route Information");
 
-    $displayRow=
-    '
-        <div class="row">'
-        .$infoArea. 
-        $tradeRouteArea.
-        '</div>
-    ';
-    
-    $title =
-        '
-            <h1 class="'.$titleClass.'">'.$titleText.'</h1>
+        $outputPageContents=''
+            .$title
+            .$scriptLink
+            .$inputPanel 
+            .$citiesArea
+            .$commoditiesArea
+            .$displayRow;
             
-            
-            <script src="js/tradingScripts.js"></script>
-        ';
-    $outputMessage=
-        '<div class="tradePage">'.
-        $title
-        .$inputPanel
+        $outputPage=createElement('div','tradePage','tradePage',$outputPageContents);
         
-        .$citiesArea
-        .$commoditiesArea
-       
-        .$displayRow.'</div>';
-        
-    echo $outputMessage;
+        return $outputPage;
+    }
+    
+
+   
+    
+    echo tradingPage();
 ?>
