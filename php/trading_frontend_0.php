@@ -11,27 +11,31 @@
     $outputMessage='';
     $inputPanel=
     '
-        <div class="'.$panelClass.'">
+        <div class="inputPanel">
         
             <label>City</label>
             </br>
-            <input class="'.$panelInputsClass.'" id="cityInput"></input>
+            <input class="panelInputs" id="cityInput"/>
             </br>
             <label>Commodity</label>
             </br>
-            <input class="'.$panelInputsClass.'" id="commodityInput"></input>
+            <input class="panelInputs" id="commodityInput"/>
             </br>
             <label>Buying Price</label>
             </br>
-            <input class="'.$panelInputsClass.'" id="buyingPriceInput"></input>
+            <input class="panelInputs" id="buyingPriceInput"/>
             </br>
             <label>Selling Price</label>
             </br>
-            <input class="'.$panelInputsClass.'" id="sellingPriceInput"></input>
+            <input class="panelInputs" id="sellingPriceInput"/>
             </br>
-            <button class="'.$submitButtonClass.'"onclick="handleSubmitButton()">Submit</button>
+            <button class="'.$submitButtonClass.'" onclick="handleSubmitButton()">Submit</button>
+            <div class="statusIndicatorBox" id="tradingStatusIndicatorBox"><p class="statusIndicator" id="tradingStatusIndicator">Ready</p></div>
         </div>
     ';
+
+    
+    
     $titleText='Trade Route Information';
     
     $citiesArea='<div id="citiesArea"></div>';

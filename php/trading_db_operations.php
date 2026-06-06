@@ -115,11 +115,11 @@
         $stmt->bind_param("ssii",$city,$commodity,$buyingPrice,$sellingPrice);
         if ($stmt->execute())
             {
-                $returnMessage='it executed';
+                $returnMessage='Record updated';
             }
             else 
                 {
-                    $returnMessage='No record update';
+                    $returnMessage='Record update failed';
                 }
         return $returnMessage;
     }
