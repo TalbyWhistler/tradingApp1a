@@ -32,15 +32,19 @@ function attachStyleSheet()
 
 function handleSubmitButton()
 {
+
+   
     let cityInput=document.getElementById("cityInput");
     let commodityInput=document.getElementById("commodityInput");
     let buyingPriceInput=document.getElementById("buyingPriceInput");
     let sellingPriceInput=document.getElementById("sellingPriceInput")
 
-    let city=cityInput.value;
-    let commodity=commodityInput.value; 
-    let buyingPrice=buyingPriceInput.value;
-    let sellingPrice=sellingPriceInput.value;
+    let city=cityInput.value.toLowerCase().trim();
+    let commodity=commodityInput.value.toLowerCase().trim(); 
+    let buyingPrice=buyingPriceInput.value.trim();
+    let sellingPrice=sellingPriceInput.value.trim();
+    
+   // console.log(city,commodity,buyingPrice,sellingPrice);
     let functionParams ={city:city,commodity:commodity,buyingPrice:buyingPrice,sellingPrice:sellingPrice};
 
     console.log("Submit button pressed");
@@ -48,9 +52,29 @@ function handleSubmitButton()
     let fetchTarget='php/trading_backend_0.php';
     let functionName='inputRecord';
 
+    let statusIndicator=document.getElementById("tradingStatusIndicator");
+   
+    if (!validateInput(city,commodity,buyingPrice,sellingPrice))
+    {
+        document.getElementById("tradingStatusIndicator").innerHTML='Invalid input';
+        return false; 
+    }
+    else 
+    {
+        document.getElementById("tradingStatusIndicator").innerHTML='Input Accepted';
+        //DEBUGGING 
+        cityInput.innerHTML='';
+        commodityInput.innerHTML='';
+        buyingPriceInput.innerHTML='';
+        sellingPriceInput.innerHTML='';
+    }
+    
+    
     //let functionParams='';
     let inputPackage={function:functionName,params:functionParams};
 
+     // debugging! 
+     
     inputPackage=JSON.stringify(inputPackage);
     fetch(fetchTarget,
         {
@@ -63,7 +87,15 @@ function handleSubmitButton()
         }
     )
     .then(response=>response.json())
-    .then(data=>{console.log(data);fetchCities();fetchCommodities()});
+    .then(data=>afterTradingUpdate(data));
+}
+
+function afterTradingUpdate(data)
+{
+    statusIndicator=document.getElementById("tradingStatusIndicator");
+    statusIndicator.innerHTML=data;
+    fetchCommodities();
+    fetchCities();
 }
 
 
@@ -478,7 +510,68 @@ function printTradeRoutesByCommodity(data)
     }
     let fullOutput=tableOpener+tableHeaders+tableRows+tableCloser;
     outputArea.innerHTML=fullOutput;
+}
 
+
+function validateInput(city,commodity,buyingPrice,sellingPrice)
+{
+   // let inputArray=[city,commodity,buyingPrice,sellingPrice];
+   // let functionsArray=[isAlpha,isAlpha,isNumber,isNumber];
+    let statusIndicator=document.getElementById("tradingStatusIndicator");
+   
+    console.log(city);
+    console.log(commodity);
+    console.log(buyingPrice);
+    console.log(sellingPrice);
+
+   // console.log("=============CURRENT start");
+    console.log(isAlpha(city));
+    console.log(isAlpha(commodity));
+    console.log(isNumber(buyingPrice));
+    console.log(isNumber(sellingPrice));
+  //  console.log("=====================CURRENT stop");
+    if(city.length==0 || commodity.length==0 || buyingPrice.length==0 || sellingPrice==0)
+    {
+        return false;
+    }
+    else if(!isAlpha(city)||!isAlpha(commodity)||!isNumber(buyingPrice)||!isNumber(sellingPrice))
+    {
+        return false;
+    }
+    else 
+    {
+        return true;
+    }
+    
+   
+}
+
+
+function isAlpha(input)
+{
+    const contained='abcdefghijklmnoqrstuvwxyz ';
+    console.log(input);
+    for(let i=0;i<input.length;i++)
+    {
+        if (contained.indexOf(input[i])==-1)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+function isNumber(input)
+{
+    const contained='0123456789';
+    for (let i=0;i<input.length;i++)
+    {
+        if(contained.indexOf(input[i])==-1)
+        {
+            return false;
+        }
+    }
+    return true;
 }
 
 tradingPageInit();
