@@ -28,12 +28,8 @@ function attachStyleSheet()
     
 }
 
-
-
 function handleSubmitButton()
 {
-
-   
     let cityInput=document.getElementById("cityInput");
     let commodityInput=document.getElementById("commodityInput");
     let buyingPriceInput=document.getElementById("buyingPriceInput");
@@ -41,54 +37,34 @@ function handleSubmitButton()
 
     let city=cityInput.value.toLowerCase().trim();
     let commodity=commodityInput.value.toLowerCase().trim(); 
-    let buyingPrice=buyingPriceInput.value.trim();
-    let sellingPrice=sellingPriceInput.value.trim();
-    
-   // console.log(city,commodity,buyingPrice,sellingPrice);
+    let buyingPrice=buyingPriceInput.value.trim(); 
+    let sellingPrice=sellingPriceInput.value.trim(); 
+
+    console.log("input values",city,commodity,buyingPrice,sellingPrice);
+
+    let functionName="inputRecord";
     let functionParams ={city:city,commodity:commodity,buyingPrice:buyingPrice,sellingPrice:sellingPrice};
-
-    console.log("Submit button pressed");
-
-    let fetchTarget='php/trading_backend_0.php';
-    let functionName='inputRecord';
-
-    let statusIndicator=document.getElementById("tradingStatusIndicator");
-   
-    if (!validateInput(city,commodity,buyingPrice,sellingPrice))
+    if (isAlpha(city) &&isAlpha(commodity) && isNumber(buyingPrice)&&isNumber(sellingPrice))
     {
-        document.getElementById("tradingStatusIndicator").innerHTML='Invalid input';
-        return false; 
+        document.getElementById("tradingStatusIndicator").innerHTML="Input Accepted";
+        callTradingBackend("inputRecord",functionParams,afterTradingUpdate);
+
+        // let's not blank the city input for now 
+        //document.getElementById("cityInput").value='';
+        document.getElementById("commodityInput").value='';
+        document.getElementById("buyingPriceInput").value='';
+        document.getElementById("sellingPriceInput").value='';
+        document.getElementById("commodityInput").focus();
+       
     }
     else 
     {
-        document.getElementById("tradingStatusIndicator").innerHTML='Input Accepted';
-        //DEBUGGING 
-        cityInput.innerHTML='';
-        commodityInput.innerHTML='';
-        buyingPriceInput.innerHTML='';
-        sellingPriceInput.innerHTML='';
+        document.getElementById("tradingStatusIndicator").innerHTML="Invalid Input";
     }
+    //let inputPackage={function:functionName,params:functionParams};
     
-    
-    //let functionParams='';
-    let inputPackage={function:functionName,params:functionParams};
-
-     // debugging! 
-     
-    inputPackage=JSON.stringify(inputPackage);
-    fetch(fetchTarget,
-        {
-            method:'POST',
-            headers:
-            {
-                'Content-Type':'application.json'
-            },
-            body:inputPackage
-        }
-    )
-    .then(response=>response.json())
-    .then(data=>afterTradingUpdate(data));
 }
+
 
 function afterTradingUpdate(data)
 {
@@ -101,20 +77,7 @@ function afterTradingUpdate(data)
 
 function fetchCities()
 {
-    let functionName='fetchCities';
-    let params='';
-    let inputPackage={function:functionName,params:params};
-    inputPackage=JSON.stringify(inputPackage);
-    let fetchTarget='php/trading_backend_0.php';
-    fetch(fetchTarget,
-        {
-            method:'POST',
-            headers:{'Content-Type':'application/json'},
-            body:inputPackage
-        }
-    )
-    .then(response=>response.json())
-    .then(data=>printCities(data));
+    callTradingBackend('fetchCities','',printCities);
 }
 
 function printCities(cities)
@@ -145,24 +108,26 @@ function printCities(cities)
     citiesArea.innerHTML=outputMessage; 
 }
 
-
-
-function fetchCommodities()
+function callTradingBackend(functionName,params,callback)
 {
-    let functionName='fetchCommodities';
-    let params='';
-    let inputPackage={function:functionName,params:params};
-    inputPackage=JSON.stringify(inputPackage);
     let fetchTarget='php/trading_backend_0.php';
+    let inputPackage={function:functionName,params:params};
+    
+    inputPackage=JSON.stringify(inputPackage);
     fetch(fetchTarget,
         {
             method:'POST',
-            headers:{'Content-Type':'application/json'},
+            headers:{'Content-Type':'Application/json'},
             body:inputPackage
         }
     )
     .then(response=>response.json())
-    .then(data=>printCommodities(data));
+    .then(data=>callback(data));
+}
+
+function fetchCommodities()
+{
+    callTradingBackend('fetchCommodities','',printCommodities);
 }
 
 function printCommodities(commodities)
@@ -353,20 +318,7 @@ function fetchCommodity(commodity)
 
 function fetchTradeRoutesByCity(city)
 {
-    let fetchTarget='php/trading_backend_0.php';
-    let functionName='tradeRoutesByCity';
-    let params={city:city};
-    let inputPackage={function:functionName,params:params};
-    inputPackage=JSON.stringify(inputPackage);
-    fetch(fetchTarget,
-        {
-            method:'POST',
-            headers:{'Content-Type':'Application/json'},
-            body:inputPackage
-        }
-     )
-     .then(response=>response.json())
-     .then(data=>printTradeRoutesByCity(data));
+     callTradingBackend('tradeRoutesByCity',{city:city},printTradeRoutesByCity);
 }
 
 function fetchTradeRoutesByCommodity(commodity)
@@ -513,42 +465,22 @@ function printTradeRoutesByCommodity(data)
 }
 
 
-function validateInput(city,commodity,buyingPrice,sellingPrice)
-{
-   // let inputArray=[city,commodity,buyingPrice,sellingPrice];
-   // let functionsArray=[isAlpha,isAlpha,isNumber,isNumber];
-    let statusIndicator=document.getElementById("tradingStatusIndicator");
-   
-    console.log(city);
-    console.log(commodity);
-    console.log(buyingPrice);
-    console.log(sellingPrice);
-
-   // console.log("=============CURRENT start");
-    console.log(isAlpha(city));
-    console.log(isAlpha(commodity));
-    console.log(isNumber(buyingPrice));
-    console.log(isNumber(sellingPrice));
-  //  console.log("=====================CURRENT stop");
-    if(city.length==0 || commodity.length==0 || buyingPrice.length==0 || sellingPrice==0)
-    {
-        return false;
-    }
-    else if(!isAlpha(city)||!isAlpha(commodity)||!isNumber(buyingPrice)||!isNumber(sellingPrice))
-    {
-        return false;
-    }
-    else 
-    {
-        return true;
-    }
-    
-   
-}
 
 
 function isAlpha(input)
 {
+    try 
+    {
+        let topLength=input.length;
+        if (topLength==0)
+        {
+            return false;
+        }
+    }
+    catch(e)
+    {
+        return false;
+    }
     const contained='abcdefghijklmnoqrstuvwxyz ';
     console.log(input);
     for(let i=0;i<input.length;i++)
@@ -563,6 +495,18 @@ function isAlpha(input)
 
 function isNumber(input)
 {
+    try 
+    {
+        let topLength=input.length;
+        if (topLength==0)
+        {
+            return false;
+        }
+    }
+    catch(e)
+    {
+        return false;
+    }
     const contained='0123456789';
     for (let i=0;i<input.length;i++)
     {
