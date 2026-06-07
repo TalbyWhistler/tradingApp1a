@@ -33,7 +33,7 @@
     {
         $cityInputLabel=createElement('label','cityInputLabel','inputLabels','City');
         $cityInput=createInput("cityInput","panelInputs");
-        $commodityInputLabel=createElement('label','commodityInput','panelInputs',"Commodity");
+        $commodityInputLabel=createElement('label','commodityInputLabel','panelInputs',"Commodity");
         $commodityInput=createInput("commodityInput","panelInputs");
         $buyingInputLabel=createElement('label','buyingInputLabel','inputLabels',"Buying Price");
         $buyingInput=createInput('buyingPriceInput',"panelInputs");
